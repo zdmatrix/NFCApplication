@@ -1,18 +1,27 @@
 package mafei.hed.nfcapplication;
 
+import java.security.PublicKey;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.os.Build;
 
-public class MainActivity extends ActionBarActivity {
+public class NFC extends ActionBarActivity {
 
+	
+	Toast toast;
+	int ret;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,8 +29,15 @@ public class MainActivity extends ActionBarActivity {
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+//					.add(R.id.container, new PlaceholderFragment()).commit();
+			.add(new PlaceholderFragment(), "backworker").commit();
 		}
+		
+		NFCApplication nfcApplication = new NFCApplication();
+		ret = nfcApplication.isSupportNFC(this);
+		
+		new showErr().start();
+		
 	}
 
 	@Override
@@ -44,9 +60,7 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
+	
 	public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
@@ -59,6 +73,33 @@ public class MainActivity extends ActionBarActivity {
 					false);
 			return rootView;
 		}
+	}
+	
+	public class showErr extends Thread{
+		@Override
+		public void run(){
+			switch(ret){
+			case 1:
+				toastShow(toast, "Support NFC!");
+				break;
+			case 0:
+				toastShow(toast, "Open NFC Function!");
+				break;
+			case -1:
+				toastShow(toast, "No Support NFC!");
+				break;
+			default:
+				toastShow(toast, "Unknown Err!");
+				break;
+			}			
+		}
+	}
+	
+	public void toastShow(Toast tst, String str){
+//		tst = Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT);
+//		tst.setGravity(Gravity.CENTER, 0, 0);
+//		tst.show();
+		Log.i("NFCnfc", str);
 	}
 
 }
