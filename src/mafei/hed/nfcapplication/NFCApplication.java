@@ -1,5 +1,7 @@
 package mafei.hed.nfcapplication;
 
+import java.util.Set;
+
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -8,15 +10,11 @@ import android.nfc.tech.IsoDep;
 import android.util.Log;
 import mafei.hed.nfcapplication.NFCMsgCode;
 
-public class NFCApplication {
-	
-	
-	IsoDep isoDep;
-	int ret;
-
-	
-	public int isSupportNFC(Context context){
+public class NFCApplication {	
+	static IsoDep isoDep;
 		
+	public static int isSupportNFC(Context context){
+		int ret;
 		NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(context);
 		if(nfcAdapter == null){
 			ret = NFCMsgCode.nNOT_SUPPORT_NFC;		
@@ -30,8 +28,9 @@ public class NFCApplication {
 		return ret;
 	}
 	
-	public int isConnectTag(Intent intent){
-		
+	public static int isConnectTag(Intent intent){
+		int ret;
+		Set<String> strings = intent.getCategories();
 		if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
 			Tag tagfromintentTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 			isoDep = IsoDep.get(tagfromintentTag);
@@ -43,21 +42,21 @@ public class NFCApplication {
 					// TODO: handle exception
 					e.printStackTrace();
 					StackTraceElement [] messages=e.getStackTrace();
-					ret = NFCMsgCode.nTAG_NOT_CONNECT;
+					ret = NFCMsgCode.nTAG_CONNECT_FAILED;
 				}
 			}
 			ret = NFCMsgCode.nTAG_CONNECT;
 		}else{
-			ret = NFCMsgCode.nTAG_NOT_SUPPORT;
+			ret = NFCMsgCode.nNO_NFC_INTENT;
 		}
 		return ret;
 	}
 	
-	public byte[] DataTransfer(byte[] apdu){
+	public static byte[] DataTransfer(byte[] apdu){
 		byte[] retvalue;
-		this.isoDep.setTimeout(10000);
+		isoDep.setTimeout(10000);
 		try {
-			retvalue = this.isoDep.transceive(apdu);
+			retvalue = isoDep.transceive(apdu);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

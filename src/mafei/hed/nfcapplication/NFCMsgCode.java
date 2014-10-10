@@ -7,8 +7,8 @@ public class NFCMsgCode {
 	public static final int nSUPPORT_NFC = 1;
 
 	public static final int nTAG_CONNECT = 1;
-	public static final int nTAG_NOT_CONNECT = 0;
-	public static final int nTAG_NOT_SUPPORT = -1;
+	public static final int nTAG_CONNECT_FAILED = 0;
+	public static final int nNO_NFC_INTENT = -1;
 	
 	public static final String sNOT_SUPPORT_NFC = "Not Support NFC!";
 	public static final String sNOT_OPEN_NFC = "Open NFC Function First!";
