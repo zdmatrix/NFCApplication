@@ -20,10 +20,10 @@ import android.widget.Toast;
 public class NFC extends ActionBarActivity {
 
 	
-	Toast toast;
-	int ret;
-	int clickcount;	
-	Button button1;
+//	Toast toast;
+//	int ret;
+//	int clickcount;	
+//	Button button1;
 	
 	NFCApplication nfcApplication;
 	NfcAdapter nfcAdapter;
@@ -48,9 +48,9 @@ public class NFC extends ActionBarActivity {
 		pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 		
 		
-		button1 = (Button)findViewById(R.id.button1);
-		button1.setOnClickListener(new ClickEvent());	
-		clickcount = 0;
+//		button1 = (Button)findViewById(R.id.button1);
+//		button1.setOnClickListener(new ClickEvent());	
+//		clickcount = 0;
 	
 	}
 	
@@ -100,7 +100,7 @@ public class NFC extends ActionBarActivity {
 			return rootView;
 		}
 	}
-	
+/*	
 	public class showErr extends Thread{
 		@Override
 		public void run(){
@@ -122,9 +122,7 @@ public class NFC extends ActionBarActivity {
 	}
 	
 	public void toastShow(Toast tst, String str){
-//		tst = Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT);
-//		tst.setGravity(Gravity.CENTER, 0, 0);
-//		tst.show();
+
 		Log.i("NFCnfc", str);
 	}
 
@@ -158,5 +156,5 @@ public class NFC extends ActionBarActivity {
 			new showErr().start();
 		}
 	}
-
+*/
 }
