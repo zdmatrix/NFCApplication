@@ -54,7 +54,7 @@ public class NFCApplication {
 	
 	public static byte[] DataTransfer(byte[] apdu){
 		byte[] retvalue;
-		isoDep.setTimeout(10000);
+		isoDep.setTimeout(30000);
 		try {
 			retvalue = isoDep.transceive(apdu);
 		} catch (Exception e) {
